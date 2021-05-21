@@ -100,7 +100,7 @@ export default function(hljs) {
       // Section types
       {
         className: 'type',
-        match: /(?:wram0|vram|romx|rom0|hram|wramx|sram|oam)(?![a-z0-9_#@])/,
+        match: /\b(?:wram0|vram|romx|rom0|hram|wramx|sram|oam)(?![a-z0-9_#@])/,
       },
     ],
 
