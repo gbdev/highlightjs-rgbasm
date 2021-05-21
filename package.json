@@ -1,0 +1,28 @@
+{
+  "name": "highlightjs-rgbasm",
+  "version": "0.1.0",
+  "description": "highlight.js syntax definition for RGBASM",
+  "main": "src/rgbasm.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gbdev/highlightjs-rgbasm.git"
+  },
+  "keywords": [
+    "rgbasm",
+    "rgbds",
+    "game boy",
+    "gameboy",
+    "highlight.js",
+    "highlightjs",
+    "syntax"
+  ],
+  "author": "Eldred HABERT <me@eldred.fr>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gbdev/highlightjs-rgbasm/issues"
+  },
+  "homepage": "https://github.com/gbdev/highlightjs-rgbasm"
+}

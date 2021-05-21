@@ -1,0 +1,34 @@
+
+INCLUDE "defines.asm"
+
+	newcharmap crash_handler
+CHARS equs "0123456789ABCDEF-GHIJKLMNOPQR:SUVWXYZabcdefghijklmnopqrTstuvwxyz! "
+CHAR = 0
+REPT STRLEN("{CHARS}")
+	charmap STRSUB("{CHARS}", CHAR + 1, 1), CHAR
+CHAR = CHAR + 1
+ENDR
+
+SECTION "Crash handler", ROM0
+
+HandleCrash::
+	; We will use VRAM as scratch, since we are going to overwrite it for
+	; screen output anyways. The thing is, we need to turn the LCD off
+	; *without* affecting flags... fun task, eh?
+
+	; Note: it's assumed that this was jumped to with IME off.
+	; Don't call this directly, use `rst Crash`.
+
+	ld [wCrashA], a ; We need to have at least one working register, so...
+	ldh a, [rIE] ; We're also going to overwrite this
+	ld [wCrashIE], a
+	ldh a, [rLCDC]
+	ld [wCrashLCDC], a
+	ld a, LCDCF_ON ; Make sure the LCD is turned on to avoid waiting infinitely
+	ldh [rLCDC], a
+	ld a, IEF_VBLANK
+	ldh [rIE], a
+	ld a, 0 ; `xor a` would overwrite flags
+	ldh [rIF], a ; No point in backing up that register, it's always changing
+	halt ; With interrupts disabled, this will exit when `IE & IF != 0`
+	nop ; Handle hardware bug if it becomes true *before* starting to execute the instruction (1-cycle window)
