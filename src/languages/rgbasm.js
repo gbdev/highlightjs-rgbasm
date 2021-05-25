@@ -37,8 +37,6 @@ export default function(hljs) {
       $pattern: /[a-z_][a-z0-9_#@]*/,
       keyword:
         'adc add and bit call ccf cpl cp daa dec di ei halt inc jp jr ld ldi ldd ldio ldh nop or pop push res reti ret rlca rlc rla rl rrc rrca rra rr rst sbc scf set sla sra srl stop sub swap xor ' + // Instructions
-        'nz|0 z|0 nc|0 ' + // Conditions (`c` is in the register list)
-        'af|0 bc|0 de|0 hl|0 sp|0 a|0 b|0 c|0 d|0 e|0 h|0 l|0 ' + // Registers
         'def bank align round ceil floor div mul sin cos tan asin acos atan atan2 pow log high low isconst sizeof startof strcmp strin strsub strlen strcat strupr strlwr strrin strrpl strfmt ' + // Functions
         'include print println printt printi printv printf export ds|0 db|0 dw|0 dl|0 section purge rsreset rsset incbin|10 charmap|10 newcharmap|10 setcharmap|10 fail warn fatal assert static_assert shift opt break ' + // Pseudo-ops
         'macro endm rept for endr load endl pushc popc union nextu endu pushs pops pusho popo ' + // Block delimiters
@@ -101,6 +99,13 @@ export default function(hljs) {
       {
         className: 'type',
         match: /\b(?:wram0|vram|romx|rom0|hram|wramx|sram|oam)(?![a-z0-9_#@])/,
+      },
+
+      // Registers & conditions
+      {
+        className: 'variable',
+        match: /\b(?:af|bc|de|hl|hli|hld|a|b|c|d|e|h|l|nz|z|nc)(?![a-z0-9_#@])/,
+        relevance: 0,
       },
     ],
 
